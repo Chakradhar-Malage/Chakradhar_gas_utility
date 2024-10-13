@@ -20,3 +20,5 @@ CM Gas Utility Services is a web application built using Django, providing a pla
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/gas-utility.git
+![Screenshot 2024-10-13 204655](https://github.com/user-attachments/assets/515bc918-37cb-4f27-8656-6e1cc9c53864)
+![Screenshot 2024-10-13 204644](https://github.com/user-attachments/assets/eb2aec3e-634c-4a27-92b7-ad08a46ed015)
