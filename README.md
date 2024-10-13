@@ -13,7 +13,7 @@ CM Gas Utility Services is a web application built using Django, providing a pla
 - **Django**: Web framework for building the application.
 - **Python**: Programming language for server-side logic.
 - **HTML/CSS**: For front-end development.
-- **Bootstrap**: For responsive design (if included).
+- **Bootstrap**: For responsive design.
 - **SQLite**: Database for storing user and service request data.
 
 ## Installation
