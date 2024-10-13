@@ -1,0 +1,222 @@
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Services</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url("{% static 'images/hero-image.png' %}");
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.8); /* Transparent background for readability */
+            padding: 30px;
+            width: 60%;
+            margin: 100px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        select, textarea, input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Submit Your Service Request</h1>
+        <form action="{% url 'submit_request' %}" method="post">
+            {% csrf_token %}
+
+            <label for="service_category">Service Category</label>
+            <select id="service_category" name="service_category" required>
+                <option value="" disabled selected>Select a category</option>
+                <option value="Gas Delivery and Distribution">Gas Delivery and Distribution</option>
+                <option value="Customer Service and Billing">Customer Service and Billing</option>
+                <option value="Safety and Compliance">Safety and Compliance</option>
+                <option value="Infrastructure Maintenance and Upgrades">Infrastructure Maintenance and Upgrades</option>
+                <option value="Environmental Stewardship">Environmental Stewardship</option>
+            </select>
+
+            <label for="request_details">Request Details</label>
+            <textarea id="request_details" name="request_details" rows="6" placeholder="Please describe your request..." required></textarea>
+
+            <input type="submit" value="Submit Request">
+        </form>
+    </div>
+
+</body>
+</html> -->
+
+<!-- request_services.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Services</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        /* Your previous styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url("{% static 'images/hero-image.png' %}");
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.8); /* Transparent background for readability */
+            padding: 30px;
+            width: 60%;
+            margin: 100px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        select, textarea, input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        
+        /* Popup styles */
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .popup.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Submit Your Service Request</h1>
+
+        <!-- Form -->
+        <form action="{% url 'submit_request' %}" method="post">
+            {% csrf_token %}
+
+            <label for="service_category">Service Category</label>
+            <select id="service_category" name="service_category" required>
+                <option value="" disabled selected>Select a category</option>
+                <option value="Gas Delivery and Distribution">Gas Delivery and Distribution</option>
+                <option value="Customer Service and Billing">Customer Service and Billing</option>
+                <option value="Safety and Compliance">Safety and Compliance</option>
+                <option value="Infrastructure Maintenance and Upgrades">Infrastructure Maintenance and Upgrades</option>
+                <option value="Environmental Stewardship">Environmental Stewardship</option>
+            </select>
+
+            <label for="request_details">Request Details</label>
+            <textarea id="request_details" name="request_details" rows="6" placeholder="Please describe your request..." required></textarea>
+
+            <input type="submit" value="Submit Request">
+        </form>
+    </div>
+
+    <!-- Popup for the success message -->
+    <div class="popup" id="success-popup">
+        {% if messages %}
+            {% for message in messages %}
+                <h3>{{ message }}</h3>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Check if there are messages to show (pop-up)
+            var popup = document.getElementById("success-popup");
+            if (popup.innerText.trim() !== "") {
+                // Display pop-up
+                popup.classList.add("active");
+
+                // Redirect to the homepage after 3 seconds
+                setTimeout(function() {
+                    window.location.href = '/';  // Replace with the URL of your homepage
+                }, 3000);
+            }
+        }
+    </script>
+
+</body>
+</html>
+
+
